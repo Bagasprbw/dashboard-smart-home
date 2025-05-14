@@ -100,26 +100,6 @@
       border-color: #b02a37;
     }
 
-    .temperature-monitor {
-      grid-column: span 2;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .temperature-monitor h5 {
-      font-weight: bold;
-      color: #b02a37;
-    }
-
-    .temperature-monitor .temp-value {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -165,20 +145,35 @@
 
     <!-- Header -->
     <div class="header">
-      <h4>Living Room</h4>
+      <h4>Rooms</h4>
       <img src="assets/logo.png" alt="profile" class="profile-img" />
     </div>
 
     <!-- Tabs -->
     <div class="tabs">
-      <a href="living-room.html" class="active">LIVING ROOM</a>
+      <a href="#" class="active">LIVING ROOM</a>
       <a href="kitchen.html">KITCHEN</a>
       <a href="bedroom.html">BEDROOM</a>
       <a href="terrace.html">TERRACE</a>
     </div>
 
-    <!-- Devices and Temperature -->
+    <!-- Devices -->
     <div class="device-grid">
+      <div class="device-card">
+        <i class="bi bi-wind"></i>
+        <h6>Air Conditioner</h6>
+        <div class="form-check form-switch d-flex justify-content-center">
+          <input class="form-check-input" type="checkbox" role="switch" checked>
+        </div>
+      </div>
+
+      <div class="device-card">
+        <i class="bi bi-tv"></i>
+        <h6>Smart TV</h6>
+        <div class="form-check form-switch d-flex justify-content-center">
+          <input class="form-check-input" type="checkbox" role="switch" checked>
+        </div>
+      </div>
 
       <div class="device-card">
         <i class="bi bi-lightbulb"></i>
@@ -195,23 +190,17 @@
           <input class="form-check-input" type="checkbox" role="switch">
         </div>
       </div>
-
-      <div class="temperature-monitor">
-        <h5>Room Temperature</h5>
-        <div class="temp-value">24°C</div>
-      </div>
-
     </div>
   </div>
 
   <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <a href="index.html" class="active"><i class="bi bi-house-door-fill"></i></a>
-    <a href="#"><i class="bi bi-grid-3x3-gap-fill"></i></a>
-    <a href="#" class="center-btn"><i class="bi bi-plus"></i></a>
-    <a href="#"><i class="bi bi-bell-fill"></i></a>
-    <a href="#"><i class="bi bi-person-circle"></i></a>
-  </div>
+  <!--<div class="bottom-nav">-->
+  <!--  <a href="#" class="active"><i class="bi bi-house-door-fill"></i></a>-->
+  <!--  <a href="#"><i class="bi bi-grid-3x3-gap-fill"></i></a>-->
+  <!--  <a href="#" class="center-btn"><i class="bi bi-plus"></i></a>-->
+  <!--  <a href="#"><i class="bi bi-bell-fill"></i></a>-->
+  <!--  <a href="./kitchen.html"><i class="bi bi-person-circle"></i></a>-->
+  <!--</div>-->
 
 </body>
 </html>
