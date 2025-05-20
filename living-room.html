@@ -158,7 +158,7 @@
     </div>
 
     <!-- Devices -->
-    <div class="device-grid">
+    <!-- <div class="device-grid">
       <div class="device-card">
         <i class="bi bi-wind"></i>
         <h6>Air Conditioner</h6>
@@ -173,13 +173,13 @@
         <div class="form-check form-switch d-flex justify-content-center">
           <input class="form-check-input" type="checkbox" role="switch" checked>
         </div>
-      </div>
+      </div> -->
 
       <div class="device-card">
         <i class="bi bi-lightbulb"></i>
         <h6>Light Bulb</h6>
         <div class="form-check form-switch d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" role="switch" checked>
+          <input class="form-check-input" type="checkbox" role="switch" data-topic="livingroom/light/set">
         </div>
       </div>
 
@@ -187,11 +187,31 @@
         <i class="bi bi-fan"></i>
         <h6>Fan</h6>
         <div class="form-check form-switch d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" role="switch">
+          <input class="form-check-input" type="checkbox" role="switch" data-topic="livingroom/fan/set">
         </div>
       </div>
     </div>
   </div>
+
+<!-- Sensor DHT22 Chart -->
+<div class="wrapper mt-4">
+  <div class="device-card"
+       id="dhtChartContainer"
+       data-topic-temp="livingroom/dht22/temperature"
+       data-topic-hum="livingroom/dht22/humidity">
+    <h5 class="text-center mb-3">DHT22 Sensor (Temperature & Humidity)</h5>
+    <canvas id="dhtChart" height="100"></canvas>
+  </div>
+</div>
+
+
+
+
+<!-- Library tambahan -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script src="mqtt-handler.js"></script>
+<script src="dht22-chart.js"></script>
 
   <!-- Bottom Navigation -->
   <!--<div class="bottom-nav">-->
