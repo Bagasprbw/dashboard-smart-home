@@ -166,47 +166,118 @@
     <!-- Bedroom 1 -->
     <h5 class="mt-4 mb-2 text-muted fw-semibold">Bedroom 1</h5>
     <div class="device-grid mb-4">
-        <div class="device-card">
-            <i class="bi bi-lightbulb"></i>
-            <h6>Light</h6>
-            <div class="form-check form-switch d-flex justify-content-center">
-            <input class="form-check-input" type="checkbox" role="switch">
-            </div>
+      <div class="device-card">
+        <i class="bi bi-lightbulb"></i>
+        <h6>Light</h6>
+        <div class="form-check form-switch d-flex justify-content-center">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            data-topic="bedroom1/light/set"
+            data-topic-status="bedroom1/light/status"
+          />
         </div>
-        <div class="device-card">
-            <i class="bi bi-thermometer-half"></i>
-            <h6>Temperature</h6>
-            <div class="temperature-display">25°C</div>
-        </div>
+      </div>
+      <div class="device-card">
+        <i class="bi bi-thermometer-half"></i>
+        <h6>Temperature</h6>
+        <div class="temperature-display" data-topic-temp="bedroom1/dht22/temperature">--°C</div>
+      </div>
     </div>
 
-    <hr>
+    <hr />
 
     <!-- Bedroom 2 -->
     <h5 class="mt-4 mb-2 text-muted fw-semibold">Bedroom 2</h5>
     <div class="device-grid mb-4">
-    <div class="device-card">
+      <div class="device-card">
         <i class="bi bi-lightbulb"></i>
         <h6>Light</h6>
         <div class="form-check form-switch d-flex justify-content-center">
-        <input class="form-check-input" type="checkbox" role="switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            data-topic="bedroom2/light/set"
+            data-topic-status="bedroom2/light/status"
+          />
         </div>
-    </div>
-    <div class="device-card">
+      </div>
+      <div class="device-card">
         <i class="bi bi-thermometer-half"></i>
         <h6>Temperature</h6>
-        <div class="temperature-display">27°C</div>
-    </div>
+        <div class="temperature-display" data-topic-temp="bedroom2/dht22/temperature">--°C</div>
+      </div>
     </div>
 
-  <!-- Bottom Navigation -->
-  <!--<div class="bottom-nav">-->
-  <!--  <a href="index.html"><i class="bi bi-house-door-fill"></i></a>-->
-  <!--  <a href="#" class="active"><i class="bi bi-grid-3x3-gap-fill"></i></a>-->
-  <!--  <a href="#" class="center-btn"><i class="bi bi-plus"></i></a>-->
-  <!--  <a href="#"><i class="bi bi-bell-fill"></i></a>-->
-  <!--  <a href="#"><i class="bi bi-person-circle"></i></a>-->
-  <!--</div>-->
+  </div>
 
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script>
+    const options = {
+      username: 'ronal',
+      password: 'ronaltama12345'
+    };
+
+    const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', options);
+
+    client.on('connect', () => {
+      console.log('MQTT Connected');
+
+      // Subscribe ke semua topic-status (checkbox)
+      document.querySelectorAll('[data-topic-status]').forEach((el) => {
+        const statusTopic = el.getAttribute('data-topic-status');
+        client.subscribe(statusTopic, (err) => {
+          if (err) {
+            console.error(`Failed to subscribe to ${statusTopic}`, err);
+          }
+        });
+      });
+
+      // Subscribe ke semua topic-temp (temperature)
+      document.querySelectorAll('[data-topic-temp]').forEach((el) => {
+        const tempTopic = el.getAttribute('data-topic-temp');
+        client.subscribe(tempTopic, (err) => {
+          if (err) {
+            console.error(`Failed to subscribe to ${tempTopic}`, err);
+          }
+        });
+      });
+    });
+
+    client.on('message', (topic, message) => {
+      const payload = message.toString();
+
+      // Update checkbox dari topic-status
+      document.querySelectorAll('[data-topic-status]').forEach((el) => {
+        if (el.getAttribute('data-topic-status') === topic) {
+          el.checked = payload === '1';
+        }
+      });
+
+      // Update temperature display dari topic-temp
+      document.querySelectorAll('[data-topic-temp]').forEach((el) => {
+        if (el.getAttribute('data-topic-temp') === topic) {
+          el.textContent = `${payload}°C`;
+        }
+      });
+    });
+
+    client.on('error', (err) => {
+      console.error('MQTT Connection Error:', err);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Publish status saat switch checkbox diubah
+      document.querySelectorAll('[data-topic]').forEach((el) => {
+        el.addEventListener('change', () => {
+          const topic = el.getAttribute('data-topic');
+          const value = el.checked ? '1' : '0';
+          client.publish(topic, value);
+        });
+      });
+    });
+  </script>
 </body>
 </html>

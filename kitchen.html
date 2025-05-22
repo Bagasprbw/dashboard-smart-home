@@ -173,14 +173,20 @@
 
     <!-- Devices -->
     <div class="device-grid">
+      <!-- Light -->
       <div class="device-card">
         <i class="bi bi-lightbulb"></i>
         <h6>Kitchen Light</h6>
         <div class="form-check form-switch d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" role="switch">
+          <input class="form-check-input"
+                 type="checkbox"
+                 role="switch"
+                 data-topic="kitchen/light"
+                 data-topic-status="kitchen/light" />
         </div>
       </div>
 
+      <!-- Smoke Detector -->
       <div class="device-card">
         <i class="bi bi-exclamation-triangle-fill"></i>
         <h6>Smoke Detector</h6>
@@ -189,44 +195,9 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <!--<div class="bottom-nav">-->
-  <!--  <a href="index.html"><i class="bi bi-house-door-fill"></i></a>-->
-  <!--  <a href="#" class="active"><i class="bi bi-grid-3x3-gap-fill"></i></a>-->
-  <!--  <a href="#" class="center-btn"><i class="bi bi-plus"></i></a>-->
-  <!--  <a href="#"><i class="bi bi-bell-fill"></i></a>-->
-  <!--  <a href="#"><i class="bi bi-person-circle"></i></a>-->
-  <!--</div>-->
-
-  <!-- Notification Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Request notification permission
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-      }
-
-      // Simulate smoke detection (replace this with real sensor data)
-      const smokeDetected = true; // <-- Change this value dynamically in real use
-
-      const statusEl = document.querySelector(".smoke-status");
-
-      if (smokeDetected) {
-        statusEl.textContent = "Smoke Detected!";
-        statusEl.classList.add("smoke-alert");
-
-        if (Notification.permission === "granted") {
-          new Notification("⚠️ Smoke Detected!", {
-            body: "Asap terdeteksi di dapur. Periksa segera.",
-            icon: "assets/smoke-icon.png"
-          });
-        }
-      } else {
-        statusEl.textContent = "No Smoke";
-        statusEl.classList.remove("smoke-alert");
-      }
-    });
-  </script>
-
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="mqtt-handler.js"></script>
 </body>
 </html>
