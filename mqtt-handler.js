@@ -8,72 +8,58 @@ const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', options);
 client.on('connect', () => {
   console.log('MQTT Connected');
 
-  // Subscribe semua elemen dengan data-topic-status
+  // Subscribe semua elemen yang punya data-topic-status
   document.querySelectorAll('[data-topic-status]').forEach((el) => {
-    const statusTopic = el.getAttribute('data-topic-status');
-    client.subscribe(statusTopic, (err) => {
-      if (err) {
-        console.error(`Failed to subscribe to ${statusTopic}`, err);
-      }
+    const topic = el.getAttribute('data-topic-status');
+    client.subscribe(topic, (err) => {
+      if (err) console.error('Failed to subscribe to', topic);
     });
   });
 
-  // Subscribe khusus untuk status deteksi asap
-  client.subscribe('kitchen/smoke/status', (err) => {
-    if (err) {
-      console.error('Failed to subscribe to kitchen/smoke/status', err);
-    }
+  // Suhu (jika ada)
+  document.querySelectorAll('[data-topic-temp]').forEach((el) => {
+    const topic = el.getAttribute('data-topic-temp');
+    client.subscribe(topic);
   });
 });
 
 client.on('message', (topic, message) => {
   const payload = message.toString();
 
-  // Update elemen switch dari topic STATUS
+  // Update tombol switch status
   document.querySelectorAll('[data-topic-status]').forEach((el) => {
     if (el.getAttribute('data-topic-status') === topic) {
-      el.checked = payload === "1";
+      el.checked = payload === '1';
     }
   });
 
-  // Update deteksi asap
-  if (topic === 'kitchen/smoke/status') {
-    const statusEl = document.querySelector(".smoke-status");
-    if (!statusEl) return;
-
-    if (payload === "1") {
-      statusEl.textContent = "Smoke Detected!";
-      statusEl.classList.add("smoke-alert");
-
-      if (Notification.permission === "granted") {
-        new Notification("⚠️ Smoke Detected!", {
-          body: "Asap terdeteksi di dapur. Periksa segera.",
-          icon: "assets/smoke-icon.png"
-        });
-      }
-    } else {
-      statusEl.textContent = "No Smoke";
-      statusEl.classList.remove("smoke-alert");
+  // Update suhu (jika ada)
+  document.querySelectorAll('[data-topic-temp]').forEach((el) => {
+    if (el.getAttribute('data-topic-temp') === topic) {
+      el.textContent = `${payload}°C`;
     }
-  }
+  });
+});
+
+// Saat user mengganti switch
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-topic]').forEach((el) => {
+    el.addEventListener('change', () => {
+      const topicSet = el.getAttribute('data-topic');
+      const topicStatus = el.getAttribute('data-topic-status');
+      const value = el.checked ? '1' : '0';
+
+      // Publish ke topic /set
+      client.publish(topicSet, value, { retain: true });
+
+      // Publish juga ke /status (optional jika perangkat tidak feedback otomatis)
+      if (topicStatus) {
+        client.publish(topicStatus, value, { retain: true });
+      }
+    });
+  });
 });
 
 client.on('error', (err) => {
-  console.error('MQTT Connection Error:', err);
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  // Minta izin notifikasi saat load
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission();
-  }
-
-  // Publish ketika elemen data-topic berubah
-  document.querySelectorAll('[data-topic]').forEach((el) => {
-    el.addEventListener('change', () => {
-      const topic = el.getAttribute('data-topic');
-      const value = el.checked ? "1" : "0";
-      client.publish(topic, value);
-    });
-  });
+  console.error('MQTT error:', err);
 });

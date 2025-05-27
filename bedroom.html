@@ -212,72 +212,10 @@
     </div>
 
   </div>
-
-  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-  <script>
-    const options = {
-      username: 'ronal',
-      password: 'ronaltama12345'
-    };
-
-    const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt', options);
-
-    client.on('connect', () => {
-      console.log('MQTT Connected');
-
-      // Subscribe ke semua topic-status (checkbox)
-      document.querySelectorAll('[data-topic-status]').forEach((el) => {
-        const statusTopic = el.getAttribute('data-topic-status');
-        client.subscribe(statusTopic, (err) => {
-          if (err) {
-            console.error(`Failed to subscribe to ${statusTopic}`, err);
-          }
-        });
-      });
-
-      // Subscribe ke semua topic-temp (temperature)
-      document.querySelectorAll('[data-topic-temp]').forEach((el) => {
-        const tempTopic = el.getAttribute('data-topic-temp');
-        client.subscribe(tempTopic, (err) => {
-          if (err) {
-            console.error(`Failed to subscribe to ${tempTopic}`, err);
-          }
-        });
-      });
-    });
-
-    client.on('message', (topic, message) => {
-      const payload = message.toString();
-
-      // Update checkbox dari topic-status
-      document.querySelectorAll('[data-topic-status]').forEach((el) => {
-        if (el.getAttribute('data-topic-status') === topic) {
-          el.checked = payload === '1';
-        }
-      });
-
-      // Update temperature display dari topic-temp
-      document.querySelectorAll('[data-topic-temp]').forEach((el) => {
-        if (el.getAttribute('data-topic-temp') === topic) {
-          el.textContent = `${payload}°C`;
-        }
-      });
-    });
-
-    client.on('error', (err) => {
-      console.error('MQTT Connection Error:', err);
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      // Publish status saat switch checkbox diubah
-      document.querySelectorAll('[data-topic]').forEach((el) => {
-        el.addEventListener('change', () => {
-          const topic = el.getAttribute('data-topic');
-          const value = el.checked ? '1' : '0';
-          client.publish(topic, value);
-        });
-      });
-    });
-  </script>
+<!-- Library tambahan -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script src="mqtt-handler.js"></script>
+<script src="dht22-chart.js"></script>
 </body>
 </html>
