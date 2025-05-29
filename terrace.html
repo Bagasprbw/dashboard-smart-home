@@ -256,7 +256,7 @@
         <i class="bi bi-exclamation-triangle"></i>
         <h6>Alarm</h6>
         <div class="form-check form-switch d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" role="switch">
+          <input class="form-check-input" type="checkbox" role="switch" data-topic="terrace/pir/enable" data-topic-status="terrace/pir/status">
         </div>
       </div>
 
@@ -278,6 +278,35 @@
   <!--  <a href="#"><i class="bi bi-bell-fill"></i></a>-->
   <!--  <a href="#"><i class="bi bi-person-circle"></i></a>-->
   <!--</div>-->
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script src="mqtt-handler.js"></script>
+<script src="dht22-chart.js"></script>
+<script src="sidebar.js"></script>
+<script>
+    // JAVASCRIPT UNTUK SIDEBAR
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "260px"; // Lebar sidebar saat terbuka
+      // Optional: Geser konten utama ke kanan
+      // document.getElementById("mainWrapper").style.marginLeft = "260px";
+      // document.body.style.backgroundColor = "rgba(0,0,0,0.4)"; // Efek gelap pada body
+    }
 
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      // Optional: Kembalikan margin konten utama
+      // document.getElementById("mainWrapper").style.marginLeft = "0";
+      // document.body.style.backgroundColor = "linear-gradient(to bottom right, #f2f2f2, #e6e6e6)"; // Kembalikan warna body
+    }
+
+    // Optional: Tutup sidebar jika diklik di luar area sidebar
+    // document.addEventListener('click', function(event) {
+    //   var sidebar = document.getElementById('mySidebar');
+    //   var openBtn = document.querySelector('.open-nav-btn'); // atau ID tombol pembuka
+    //   // Cek apakah sidebar terbuka, klik bukan pada sidebar, dan bukan pada tombol pembuka
+    //   if (sidebar.style.width === "260px" && !sidebar.contains(event.target) && !openBtn.contains(event.target)) {
+    //     closeNav();
+    //   }
+    // });
+  </script>
 </body>
 </html>

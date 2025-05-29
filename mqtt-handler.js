@@ -1,4 +1,3 @@
-// mqtt-handler.js
 
 const options = {
   username: 'ronal',
