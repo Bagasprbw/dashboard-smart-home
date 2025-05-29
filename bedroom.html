@@ -234,24 +234,18 @@
     <!-- Bedroom 1 -->
     <h5 class="mt-4 mb-2 text-muted fw-semibold">Bedroom 1</h5>
     <div class="device-grid mb-4">
-      <div class="device-card">
-        <i class="bi bi-lightbulb"></i>
-        <h6>Light</h6>
-        <div class="form-check form-switch d-flex justify-content-center">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            role="switch"
-            data-topic="bedroom1/light/set"
-            data-topic-status="bedroom1/light/status"
-          />
+        <div class="device-card">
+            <i class="bi bi-lightbulb"></i>
+            <h6>Light</h6>
+            <div class="form-check form-switch d-flex justify-content-center">
+            <input class="form-check-input" type="checkbox" role="switch">
+            </div>
         </div>
-      </div>
-      <div class="device-card">
-        <i class="bi bi-thermometer-half"></i>
-        <h6>Temperature</h6>
-        <div class="temperature-display" data-topic-temp="bedroom2/dht22/temperature">--°C</div>
-      </div>
+        <div class="device-card">
+            <i class="bi bi-thermometer-half"></i>
+            <h6>Temperature</h6>
+            <div class="temperature-display">25°C</div>
+        </div>
     </div>
 
     <hr />
@@ -279,50 +273,14 @@
       </div>
     </div>
 
-  </div>
+  <!-- Bottom Navigation -->
+  <!--<div class="bottom-nav">-->
+  <!--  <a href="index.html"><i class="bi bi-house-door-fill"></i></a>-->
+  <!--  <a href="#" class="active"><i class="bi bi-grid-3x3-gap-fill"></i></a>-->
+  <!--  <a href="#" class="center-btn"><i class="bi bi-plus"></i></a>-->
+  <!--  <a href="#"><i class="bi bi-bell-fill"></i></a>-->
+  <!--  <a href="#"><i class="bi bi-person-circle"></i></a>-->
+  <!--</div>-->
 
-  <!-- Sensor DHT22 Chart -->
-<div class="wrapper mt-4">
-  <div class="device-card"
-       id="dhtChartContainer"
-       data-topic-temp="bedroom2/dht22/temperature"
-       data-topic-hum="bedroom2/dht22/humidity">
-    <h5 class="text-center mb-3">DHT22 Sensor (Temperature & Humidity)</h5>
-    <canvas id="dhtChart" height="100"></canvas>
-  </div>
-  
-</div>
-<!-- Library tambahan -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-<script src="mqtt-handler.js"></script>
-<script src="dht22-chart.js"></script>
-<script src="sidebar.js"></script>
-<script>
-    // JAVASCRIPT UNTUK SIDEBAR
-    function openNav() {
-      document.getElementById("mySidebar").style.width = "260px"; // Lebar sidebar saat terbuka
-      // Optional: Geser konten utama ke kanan
-      // document.getElementById("mainWrapper").style.marginLeft = "260px";
-      // document.body.style.backgroundColor = "rgba(0,0,0,0.4)"; // Efek gelap pada body
-    }
-
-    function closeNav() {
-      document.getElementById("mySidebar").style.width = "0";
-      // Optional: Kembalikan margin konten utama
-      // document.getElementById("mainWrapper").style.marginLeft = "0";
-      // document.body.style.backgroundColor = "linear-gradient(to bottom right, #f2f2f2, #e6e6e6)"; // Kembalikan warna body
-    }
-
-    // Optional: Tutup sidebar jika diklik di luar area sidebar
-    // document.addEventListener('click', function(event) {
-    //   var sidebar = document.getElementById('mySidebar');
-    //   var openBtn = document.querySelector('.open-nav-btn'); // atau ID tombol pembuka
-    //   // Cek apakah sidebar terbuka, klik bukan pada sidebar, dan bukan pada tombol pembuka
-    //   if (sidebar.style.width === "260px" && !sidebar.contains(event.target) && !openBtn.contains(event.target)) {
-    //     closeNav();
-    //   }
-    // });
-  </script>
 </body>
 </html>
