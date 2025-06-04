@@ -318,36 +318,38 @@
       }
 
       function login() {
-        const username = sanitizeInput(
-          document.getElementById("username").value
-        );
-        const password = sanitizeInput(
-          document.getElementById("password").value
-        );
-        const loginBtn = document.getElementById("loginBtn");
-        const btnText = document.getElementById("btnText");
-        const loading = document.getElementById("loading");
+          const username = sanitizeInput(
+              document.getElementById("username").value
+          );
+          const password = sanitizeInput(
+              document.getElementById("password").value
+          );
+          const loginBtn = document.getElementById("loginBtn");
+          const btnText = document.getElementById("btnText");
+          const loading = document.getElementById("loading");
 
-        // Show loading
-        btnText.style.display = "none";
-        loading.style.display = "block";
-        loginBtn.disabled = true;
+          // Tampilkan loading
+          btnText.style.display = "none";
+          loading.style.display = "block";
+          loginBtn.disabled = true;
 
-        // Simulate loading delay
-        setTimeout(() => {
-          if (username === "admin" && password === "admin123") {
-            // Note: In a real application, avoid using sessionStorage for authentication
-            // This is just for demonstration purposes
-            window.location.href = "dashboard.html";
-          } else {
-            showError("Username atau password salah!");
+          // Simulasikan penundaan loading
+          setTimeout(() => {
+              if (username === "admin" && password === "admin123") {
+                  // *** TAMBAHKAN BARIS INI UNTUK MENGATUR STATUS LOGIN ***
+                  sessionStorage.setItem("loggedIn", "true"); 
+                  // Catatan: Dalam aplikasi nyata, hindari menggunakan sessionStorage untuk autentikasi
+                  // Ini hanya untuk tujuan demonstrasi
+                  window.location.href = "dashboard.html";
+              } else {
+                  showError("Username atau password salah!");
 
-            // Reset button
-            btnText.style.display = "inline";
-            loading.style.display = "none";
-            loginBtn.disabled = false;
-          }
-        }, 1000);
+                  // Reset tombol
+                  btnText.style.display = "inline";
+                  loading.style.display = "none";
+                  loginBtn.disabled = false;
+              }
+          }, 1000);
       }
 
       // Handle Enter key press
